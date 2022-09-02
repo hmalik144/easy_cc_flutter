@@ -2,10 +2,8 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.1.2
-  flutter-orb-latest: souravjangra/flutter-orb-latest@0.0.2
-#  flutter-orb: circleci/flutter@1.1.0
+  flutter-orb: circleci/flutter@1.1.0
   ruby: circleci/ruby@1.8.0
-  docker: circleci/docker@2.1.3
 
 jobs:
   integration_test_android:
@@ -15,7 +13,7 @@ jobs:
       tag: 2022.03.1
     steps:
       - checkout
-      - flutter-orb-latest/install_sdk_and_pub:
+      - flutter-orb/install_sdk_and_pub:
           cache-version: machine
           flutter_version: 2.10.3
       - android/create-avd:
@@ -27,7 +25,7 @@ jobs:
           post-emulator-launch-assemble-command: 'flutter build apk --debug'
           restore-gradle-cache-find-args: ./android -name 'build.gradle'
       - android/run-tests:
-          test-command: flutter drive --target=test/widget_test.dart
+          test-command: flutter drive --target=test_driver/app.dart
       - store_artifacts:
           path: ozzie
 
@@ -38,10 +36,10 @@ jobs:
       tag: 2022.03.1
     steps:
       - checkout
-      - flutter-orb-latest/install_sdk_and_pub:
+      - flutter-orb/install_sdk_and_pub:
           cache-version: docker
           flutter_version: 2.10.3
-      - flutter-orb-latest/install_android_gradle
+      - flutter-orb/install_android_gradle
       - ruby/install-deps:
           app-dir: android
           key: android
@@ -52,11 +50,10 @@ jobs:
 workflows:
   test_and_distribute:
     jobs:
-      - flutter-orb-latest/unit_test:
+      - flutter-orb/unit_test:
           version: 2.10.3
-      - flutter-orb-latest/lint:
+      - flutter-orb/lint:
           version: 2.10.3
-      - integration_test_android
       - distribute_android:
           context: # Context
             - mobile
