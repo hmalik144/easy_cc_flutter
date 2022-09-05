@@ -1,4 +1,5 @@
 import 'package:easy_cc_flutter/MainViewModel.dart';
+import 'package:easy_cc_flutter/Utils/SelectionType.dart';
 import 'package:easy_cc_flutter/views/DropDownBox.dart';
 import 'package:easy_cc_flutter/views/EditText.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,9 @@ class HomePage extends BaseStatelessWidget<MainViewModel> {
   @override
   Widget displayWidget(
       BuildContext context, MainViewModel model, Widget? child) {
+    TextEditingController controller1 = TextEditingController();
+    TextEditingController controller2 = TextEditingController();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,7 +28,9 @@ class HomePage extends BaseStatelessWidget<MainViewModel> {
           child: Column(
             children: [
               DropDownBox(model.data, (selected) {}),
-              EditText("Enter conversion from", model.top, (selection) => {})
+              ConverterEditText("Enter conversion from", controller1, (input) => {
+                controller2.text = model.convertInput(input, SelectionType.conversionFrom)
+              })
             ],
           ),
         ),
@@ -33,7 +39,9 @@ class HomePage extends BaseStatelessWidget<MainViewModel> {
           child: Column(
             children: [
               DropDownBox(model.data, (selected) {}),
-              EditText("Enter conversion from", model.bottom, (selection) => {})
+              ConverterEditText("Enter conversion from", controller2, (input) => {
+                controller1.text = model.convertInput(input, SelectionType.conversionTo)
+              })
             ],
           ),
         ),

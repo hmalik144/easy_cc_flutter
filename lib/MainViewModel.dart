@@ -1,9 +1,9 @@
 import 'package:easy_cc_flutter/BaseViewModel.dart';
+import 'package:easy_cc_flutter/Utils/SelectionType.dart';
 
 class MainViewModel extends BaseViewmodel {
 
-  String? top;
-  String? bottom;
+  double conversionRate = 1.4;
 
   final List<String> data = <String>['ALL - Albanian Lek',
     'AFN - Afghan Afghani',
@@ -160,4 +160,18 @@ class MainViewModel extends BaseViewmodel {
     'XOF - West African CFA Franc',
     'YER - Yemeni Rial',
     'ZMW - Zambian Kwacha'];
+
+  String convertInput(String? input, SelectionType type) {
+    if (input == null || input.isEmpty) {
+      return "";
+    }
+    double convertedInput = double.parse(input);
+
+    switch (type) {
+      case SelectionType.conversionFrom:
+        return (convertedInput * conversionRate).toStringAsFixed(2);
+      case SelectionType.conversionTo:
+        return (convertedInput / conversionRate).toStringAsFixed(2);
+    }
+  }
 }

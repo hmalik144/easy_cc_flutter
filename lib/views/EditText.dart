@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../Utils/Constants.dart';
 
-class EditText extends StatelessWidget {
+class ConverterEditText extends StatelessWidget {
   final String _hintText;
-  final String? _input;
   final Function(String?) _onChanged;
+  final TextEditingController _controller;
 
-  const EditText(this._hintText, this._input, this._onChanged, {super.key});
+  const ConverterEditText(this._hintText, this._controller, this._onChanged, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
       child: TextField(
-        controller: TextEditingController(
-          text: _input
-        ),
+        controller: _controller,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(14),
           border: const OutlineInputBorder(
@@ -28,7 +27,10 @@ class EditText extends StatelessWidget {
           hintText: _hintText,
         ),
         onChanged: _onChanged,
-
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        ],
       ),
     );
   }

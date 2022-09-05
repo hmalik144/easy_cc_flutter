@@ -1,0 +1,4 @@
+enum SelectionType {
+  conversionFrom,
+  conversionTo
+}
