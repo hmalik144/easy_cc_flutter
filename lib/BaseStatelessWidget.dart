@@ -19,7 +19,7 @@ abstract class BaseStatelessWidget<T extends BaseViewmodel>
   Widget build(BuildContext parent) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(PADDING_GLOBAL),
+        padding: const EdgeInsets.all(paddingGlobal),
         decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
