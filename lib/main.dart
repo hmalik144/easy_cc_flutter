@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'Home.dart';
+import 'data/prefs/PreferenceProvider.dart';
+import 'locator.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
+  await locator<PreferenceProvider>().init();
   runApp(const MyApp());
 }
 
