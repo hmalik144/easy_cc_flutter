@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:logger/logger.dart';
 
 import 'Home.dart';
 import 'data/prefs/PreferenceProvider.dart';
 import 'locator.dart';
 
+var logger = Logger(
+  printer: PrettyPrinter(),
+);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  await dotenv.load();
   await locator<PreferenceProvider>().init();
   runApp(const MyApp());
 }

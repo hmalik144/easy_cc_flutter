@@ -21,4 +21,12 @@ abstract class BaseViewmodel extends BaseViewModel{
     _viewState = HasError(error);
     notifyListeners();
   }
+
+  dynamic getData() {
+    if (viewState.runtimeType is HasData) {
+      return (viewState as HasData).data;
+    } else {
+      return null;
+    }
+  }
 }

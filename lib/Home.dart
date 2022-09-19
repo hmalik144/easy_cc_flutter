@@ -4,7 +4,6 @@ import 'package:easy_cc_flutter/views/DropDownBox.dart';
 import 'package:easy_cc_flutter/views/EditText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'BaseStatelessWidget.dart';
 import 'Utils/Constants.dart';
@@ -56,5 +55,12 @@ class HomePage extends BaseStatelessWidget<MainViewModel> {
         ),
       ],
     );
+  }
+
+  @override
+  void onModelReady(MainViewModel model) {
+    String selected1 = model.getConversionPair(SelectionType.conversionFrom);
+    String selected2 = model.getConversionPair(SelectionType.conversionTo);
+    model.setCurrencyRate(selected1, selected2);
   }
 }
