@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:toast/toast.dart';
 
 import 'BaseViewModel.dart';
 import 'Utils/Constants.dart';
@@ -17,6 +17,7 @@ abstract class BaseStatelessWidget<T extends BaseViewmodel>
 
   @override
   Widget build(BuildContext parent) {
+    ToastContext().init(parent);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(paddingGlobal),
@@ -48,7 +49,7 @@ abstract class BaseStatelessWidget<T extends BaseViewmodel>
     );
   }
 
-  void onModelReady(model) {}
+  void onModelReady(T model) {}
 
   void onStarted() {}
 }
