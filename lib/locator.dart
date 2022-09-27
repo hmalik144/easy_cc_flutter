@@ -11,6 +11,7 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   final dio = Dio();
+
   locator.registerLazySingleton(() => PreferenceProvider());
   locator.registerLazySingleton(() => CurrencyApi(dio));
   locator.registerLazySingleton(() => BackupCurrencyApi(dio));

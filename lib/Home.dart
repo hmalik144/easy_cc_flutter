@@ -34,7 +34,7 @@ class HomePage extends BaseStatelessWidget<MainViewModel> {
                         model.setConversionPair(selected1, selected2);
                       }),
               ConverterEditText("Enter conversion from", controller1, (input) => {
-                controller2.text = model.convertInput(input, SelectionType.conversionFrom)
+                controller2.text = model.convertInput(input?.trim(), SelectionType.conversionFrom)
               })
             ],
           ),
@@ -48,7 +48,7 @@ class HomePage extends BaseStatelessWidget<MainViewModel> {
                 model.setConversionPair(selected1, selected2);
               }),
               ConverterEditText("Enter conversion from", controller2, (input) => {
-                controller1.text = model.convertInput(input, SelectionType.conversionTo)
+                controller1.text = model.convertInput(input?.trim(), SelectionType.conversionTo)
               })
             ],
           ),

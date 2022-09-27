@@ -1,0 +1,13 @@
+{
+  "query": {
+    "count": 1
+  },
+  "results": {
+    "AUD_GBP": {
+      "id": "AUD_GBP",
+      "fr": "AUD",
+      "to": "GBP",
+      "val": 0.601188
+    }
+  }
+}
