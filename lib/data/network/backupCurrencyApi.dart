@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../model/Currency.dart';
+import 'app_dio.dart';
 
 part 'backupCurrencyApi.g.dart';
 
@@ -10,13 +11,18 @@ part 'backupCurrencyApi.g.dart';
 abstract class BackupCurrencyApi {
   factory BackupCurrencyApi(Dio dio, {String baseUrl}) = _BackupCurrencyApi;
 
+  static BackupCurrencyApi create() {
+    final dio = AppDio.createDio();
+    return _BackupCurrencyApi(dio);
+  }
+
   @GET("latest?")
   Future<HttpResponse<CurrencyResponse>> getCurrencyRate(@Query("from") String currencyFrom,
       @Query("to") String currencyTo);
 }
 
 @JsonSerializable()
-class CurrencyResponse implements Mapper{
+class CurrencyResponse implements CurrencyMapper{
   String? data;
   double amount;
   Map<String, double>? rates;

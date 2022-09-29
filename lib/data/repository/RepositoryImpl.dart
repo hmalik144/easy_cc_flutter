@@ -4,7 +4,6 @@ import 'package:easy_cc_flutter/Utils/currencyUtils.dart';
 import 'package:easy_cc_flutter/data/model/Currency.dart';
 import 'package:easy_cc_flutter/data/prefs/CurrencyPair.dart';
 import 'package:easy_cc_flutter/data/prefs/PreferenceProvider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../locator.dart';
 import '../../main.dart';
@@ -36,7 +35,7 @@ class RepositoryImpl extends Repository with SafeApiCall {
     String currency = "${from}_$to";
 
     try {
-      ResponseObject responseObject = await getDataFromApiCall(_api.getConversion(dotenv.env['apiKey']!, currency));
+      ResponseObject responseObject = await getDataFromApiCall(_api.getConversion(currency));
       return responseObject.convert();
     } on HttpException catch(error) {
       logger.e(error);
