@@ -6,6 +6,7 @@ class Currency {
   Currency(this.from, this.to, this.rate);
 }
 
-abstract class Mapper {
+/// Mapper class to convert any object to [Currency]
+abstract class CurrencyMapper {
   Currency convert();
 }

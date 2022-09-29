@@ -73,7 +73,7 @@ void main() {
 
     // When
     when(mockResponse.data).thenReturn(responseObject);
-    when(currencyApi.getConversion(dotenv.env['apiKey']!, currency))
+    when(currencyApi.getConversion(currency))
         .thenAnswer((_) async => mockResponse);
 
     // Then
@@ -91,7 +91,7 @@ void main() {
     String currency = "AUD_GBP";
 
     // When
-    when(currencyApi.getConversion(dotenv.env['apiKey']!, currency))
+    when(currencyApi.getConversion(currency))
         .thenAnswer((_) async => Future.error(MockDioError()));
     when(mockResponse.data).thenReturn(currencyResponse);
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
@@ -110,7 +110,7 @@ void main() {
 
     // When
     when(backUpError.error).thenReturn("Error message");
-    when(currencyApi.getConversion(dotenv.env['apiKey']!, currency))
+    when(currencyApi.getConversion(currency))
         .thenAnswer((_) async => Future.error(MockDioError()));
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(backUpError));

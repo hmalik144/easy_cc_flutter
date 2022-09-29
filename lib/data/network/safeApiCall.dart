@@ -11,7 +11,7 @@ mixin SafeApiCall {
       HttpResponse<T> httpResponse = await apiCall;
       return httpResponse.data;
     } on DioError catch(dioError) {
-      Map<String, dynamic>? errorResponse = dioError.response?.data;
+      Map<String, dynamic>? errorResponse = dioError.response?.data?["error"];
       String error;
 
       if (errorResponse?["error"] != null){
@@ -21,7 +21,6 @@ mixin SafeApiCall {
       } else {
         error = "Failed to retrieve data from api";
       }
-
       logger.e(dioError.error);
 
       throw HttpException(error);

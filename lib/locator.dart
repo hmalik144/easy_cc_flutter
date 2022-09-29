@@ -10,12 +10,9 @@ import 'data/prefs/PreferenceProvider.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  final dio = Dio();
-
   locator.registerLazySingleton(() => PreferenceProvider());
-  locator.registerLazySingleton(() => CurrencyApi(dio));
-  locator.registerLazySingleton(() => BackupCurrencyApi(dio));
+  locator.registerLazySingleton(() => CurrencyApi.create());
+  locator.registerLazySingleton(() => BackupCurrencyApi.create());
   locator.registerLazySingleton(() => RepositoryImpl());
   locator.registerFactory(() => MainViewModel());
-
 }

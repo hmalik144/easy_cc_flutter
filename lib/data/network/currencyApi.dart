@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:easy_cc_flutter/data/network/app_dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -8,14 +10,21 @@ part 'currencyApi.g.dart';
 
 @RestApi(baseUrl: "https://free.currencyconverterapi.com/api/v3/")
 abstract class CurrencyApi {
-  factory CurrencyApi(Dio dio, {String baseUrl}) = _CurrencyApi;
+  factory CurrencyApi(Dio dio) = _CurrencyApi;
+  
+  static CurrencyApi create() {
+    final dio = AppDio.createDio();
+    dio.options.queryParameters.addAll({"apiKey": dotenv.env['apiKey']!});
+
+    return _CurrencyApi(dio);
+  }
 
   @GET("/convert?")
-  Future<HttpResponse<ResponseObject>> getConversion(@Query("apiKey") String apiKey, @Query("q") String currency);
+  Future<HttpResponse<ResponseObject>> getConversion(@Query("q") String currency);
 }
 
 @JsonSerializable()
-class ResponseObject implements Mapper{
+class ResponseObject implements CurrencyMapper{
   dynamic query;
   Map<String, CurrencyObject>? results;
 
