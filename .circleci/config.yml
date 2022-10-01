@@ -5,16 +5,9 @@ jobs:
   setup_env_files:
     docker:
       - image: cirrusci/flutter:3.3.3
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD
     steps:
-      - checkout
       - run:
-          command: |
-            touch .env
-            echo "apiKey=${API_KEY}" >> .env
-            ls
+          command: --dart-define=currencyApiKey=${API_KEY}
 workflows:
   test:
     jobs:
