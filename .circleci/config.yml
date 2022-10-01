@@ -9,6 +9,7 @@ jobs:
       - checkout
       - run:
           command: |
+            flutter pub get
             flutter pub run build_runner build
 workflows:
   test:
