@@ -6,8 +6,10 @@ jobs:
     docker:
       - image: cirrusci/flutter:3.3.3
     steps:
+      - checkout
       - run:
-          command: flutter pub run build_runner build
+          command: |
+            flutter pub run build_runner build
 workflows:
   test:
     jobs:
