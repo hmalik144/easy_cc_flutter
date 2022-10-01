@@ -1,8 +1,18 @@
 version: 2.1
 orbs:
   flutter: circleci/flutter@1.1.0
+jobs:
+  setup_env_files:
+    docker:
+      - image: cirrusci/flutter:3.3.3
+    steps:
+      - run:
+          command: flutter pub run build_runner build
 workflows:
   test:
     jobs:
+      - setup_env_files
       - flutter/unit_test:
           version: 3.3.3
+          requires:
+            - setup_env_files
