@@ -8,7 +8,8 @@ jobs:
     steps:
       - run:
           command: |
-              echo apiKey=$API_KEY > .env
+              checkout
+              echo apiKey=$API_KEY > $USER.env
               ls
 workflows:
   test:
