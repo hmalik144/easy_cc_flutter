@@ -8,7 +8,7 @@ jobs:
     steps:
       - run:
           command: |
-              echo apiKey=$API_KEY >> ${BASH_ENV}.env
+              echo apiKey=$API_KEY > ${BASH_ENV}/.env
               source $BASH_ENV
 workflows:
   test:
