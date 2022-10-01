@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 
 import 'Home.dart';
@@ -13,7 +12,6 @@ var logger = Logger(
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-  await dotenv.load();
   await locator<PreferenceProvider>().init();
   runApp(const MyApp());
 }

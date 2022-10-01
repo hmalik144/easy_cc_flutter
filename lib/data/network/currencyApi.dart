@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:easy_cc_flutter/data/network/app_dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -11,10 +10,11 @@ part 'currencyApi.g.dart';
 @RestApi(baseUrl: "https://free.currencyconverterapi.com/api/v3/")
 abstract class CurrencyApi {
   factory CurrencyApi(Dio dio) = _CurrencyApi;
+  static const api = String.fromEnvironment('currencyApiKey');
   
   static CurrencyApi create() {
     final dio = AppDio.createDio();
-    dio.options.queryParameters.addAll({"apiKey": dotenv.env['apiKey']!});
+    dio.options.queryParameters.addAll({"apiKey": api});
 
     return _CurrencyApi(dio);
   }

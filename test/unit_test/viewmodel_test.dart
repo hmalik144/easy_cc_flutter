@@ -6,7 +6,6 @@ import 'package:easy_cc_flutter/data/model/Currency.dart';
 import 'package:easy_cc_flutter/data/prefs/CurrencyPair.dart';
 import 'package:easy_cc_flutter/data/repository/RepositoryImpl.dart';
 import 'package:easy_cc_flutter/locator.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -24,9 +23,9 @@ void main() {
   const String fromCurrency = "AUD - Australian Dollar";
   const String toCurrency = "GBP - British Pound Sterling";
 
-  setUpAll(() async {
-    // Setup
-    await dotenv.load(fileName: "test/resources/test_res.env");
+  setUpAll(() {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
     // Create mock object.
     repository = MockRepositoryImpl();
 
