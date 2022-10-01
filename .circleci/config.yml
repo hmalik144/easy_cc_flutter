@@ -7,9 +7,5 @@ jobs:
       - checkout
       - run: flutter doctor
       - run: flutter pub get
-      - run: flutter run --dart-define=currencyApiKey=${API_KEY}
       - run: flutter pub run build_runner build
       - run: flutter test
-#      - run: flutter build apk --release
-#      - store_artifacts:
-#          path: build/app/outputs/flutter-apk/app-release.apk
