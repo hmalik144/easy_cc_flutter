@@ -5,6 +5,9 @@ jobs:
   setup_env_files:
     docker:
       - image: cirrusci/flutter:3.3.3
+      auth:
+        username: mydockerhub-user
+        password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
