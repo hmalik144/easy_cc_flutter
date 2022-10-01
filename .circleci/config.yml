@@ -4,7 +4,7 @@ orbs:
 jobs:
   setup_env_files:
     docker:
-      - image: cimg/base:2022.05
+      - image: cirrusci/flutter:3.3.3
     steps:
       - checkout
       - run:
