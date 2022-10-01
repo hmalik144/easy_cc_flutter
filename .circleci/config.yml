@@ -1,22 +1,20 @@
 version: 2.1
-orbs:
-  flutter: circleci/flutter@1.1.0
 jobs:
-  setup_env_files:
+  build:
     docker:
-      - image: cirrusci/flutter:3.3.3
+      - image: cirrusci/flutter:3.0.1
     steps:
       - checkout
-      - run:
-          command: |
-            flutter pub get
-            flutter pub run build_runner build
-            ls
-workflows:
-  test:
-    jobs:
-      - setup_env_files
-      - flutter/unit_test:
-          version: 3.3.3
-          requires:
-            - setup_env_files
+      - run: flutter doctor
+      - run: flutter test
+      - run: flutter build apk --release
+      - store_artifacts:
+          path: build/app/outputs/flutter-apk/app-release.apk
+#workflows:
+#  test:
+#    jobs:
+#      - setup_env_files
+#      - flutter/unit_test:
+#          version: 3.3.3
+#          requires:
+#            - setup_env_files
