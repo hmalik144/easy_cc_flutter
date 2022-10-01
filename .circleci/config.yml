@@ -9,7 +9,7 @@ jobs:
       - run:
           command: echo apiKey=$API_KEY > .env
       - run:
-          command: mkdir test/resources
+          command: mkdir /test/resources
       - run:
           command: echo apiKey=123456 > /test/resources/test_res.env
 workflows:
