@@ -1,8 +1,15 @@
 version: 2.1
 orbs:
   flutter: circleci/flutter@1.1.0
+commands:
+  setup_env_files:
+    steps:
+      - run:
+        - echo apiKey=$API_KEY > .env
+        - echo apiKey=123456 > test/resources/test_res.env
 workflows:
   test:
     jobs:
+      - setup_env_files
       - flutter/unit_test:
           version: 3.3.3
