@@ -3,12 +3,10 @@ orbs:
   flutter: circleci/flutter@1.1.0
 commands:
   setup_env_files:
+    description: "build .env files for"
     steps:
-      - run:
-          name: Adding .env files
-    command:
-      - echo apiKey=$API_KEY > .env
-      - echo apiKey=123456 > test/resources/test_res.env
+      - run: echo apiKey=$API_KEY > .env
+      - run: echo apiKey=123456 > test/resources/test_res.env
 workflows:
   test:
     jobs:
