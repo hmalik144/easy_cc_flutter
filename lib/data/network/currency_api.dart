@@ -1,15 +1,16 @@
+// ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
 import 'package:easy_cc_flutter/data/network/app_dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../model/Currency.dart';
+import '../model/currency.dart';
 
-part 'currencyApi.g.dart';
+part 'currency_api.g.dart';
 
 @RestApi(baseUrl: "https://free.currencyconverterapi.com/api/v3/")
 abstract class CurrencyApi {
-  factory CurrencyApi(Dio dio) = _CurrencyApi;
+  factory CurrencyApi(Dio dio, {String baseUrl}) = _CurrencyApi;
   static const api = String.fromEnvironment('currencyApiKey');
   
   static CurrencyApi create() {

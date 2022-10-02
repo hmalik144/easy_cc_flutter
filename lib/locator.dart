@@ -1,11 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:easy_cc_flutter/MainViewModel.dart';
-import 'package:easy_cc_flutter/data/network/backupCurrencyApi.dart';
-import 'package:easy_cc_flutter/data/network/currencyApi.dart';
-import 'package:easy_cc_flutter/data/repository/RepositoryImpl.dart';
+import 'package:easy_cc_flutter/main_view_model.dart';
+import 'package:easy_cc_flutter/data/network/backup_currency_api.dart';
+import 'package:easy_cc_flutter/data/network/currency_api.dart';
+import 'package:easy_cc_flutter/data/repository/repository_impl.dart';
 import 'package:get_it/get_it.dart';
 
-import 'data/prefs/PreferenceProvider.dart';
+import 'data/prefs/preference_provider.dart';
 
 GetIt locator = GetIt.instance;
 

@@ -1,6 +1,6 @@
 import 'package:stacked/stacked.dart';
 
-import 'Utils/ViewState.dart';
+import 'Utils/view_state.dart';
 
 abstract class BaseViewmodel extends BaseViewModel{
 

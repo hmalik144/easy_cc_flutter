@@ -1,5 +1,5 @@
-import '../model/Currency.dart';
-import '../prefs/CurrencyPair.dart';
+import '../model/currency.dart';
+import '../prefs/currency_pair.dart';
 
 abstract class Repository {
   CurrencyPair getConversionPair();
