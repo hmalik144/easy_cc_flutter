@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toast/toast.dart';
 
-import 'BaseViewModel.dart';
-import 'Utils/Constants.dart';
-import 'Utils/ViewState.dart';
-import 'Utils/ViewUtils.dart';
+import 'base_viewmodel.dart';
+import 'Utils/constants.dart';
+import 'Utils/view_state.dart';
+import 'Utils/view_utils.dart';
 
 abstract class BaseStatelessWidget<T extends BaseViewmodel>
     extends StatelessWidget {
@@ -16,6 +16,7 @@ abstract class BaseStatelessWidget<T extends BaseViewmodel>
   Widget displayWidget(BuildContext context, T model, Widget? child);
 
   @override
+  // ignore: avoid_renaming_method_parameters
   Widget build(BuildContext parent) {
     ToastContext().init(parent);
     return Scaffold(

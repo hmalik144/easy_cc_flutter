@@ -1,12 +1,13 @@
 import 'dart:io';
 
+// ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
-import 'package:easy_cc_flutter/data/model/Currency.dart';
-import 'package:easy_cc_flutter/data/network/backupCurrencyApi.dart';
-import 'package:easy_cc_flutter/data/network/currencyApi.dart';
-import 'package:easy_cc_flutter/data/prefs/CurrencyPair.dart';
-import 'package:easy_cc_flutter/data/prefs/PreferenceProvider.dart';
-import 'package:easy_cc_flutter/data/repository/RepositoryImpl.dart';
+import 'package:easy_cc_flutter/data/model/currency.dart';
+import 'package:easy_cc_flutter/data/network/backup_currency_api.dart';
+import 'package:easy_cc_flutter/data/network/currency_api.dart';
+import 'package:easy_cc_flutter/data/prefs/currency_pair.dart';
+import 'package:easy_cc_flutter/data/prefs/preference_provider.dart';
+import 'package:easy_cc_flutter/data/repository/repository_impl.dart';
 import 'package:easy_cc_flutter/locator.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';

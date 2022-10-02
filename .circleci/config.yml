@@ -8,4 +8,5 @@ jobs:
       - run: flutter doctor
       - run: flutter pub get
       - run: flutter pub run build_runner build
+      - run: flutter analyze lib
       - run: flutter test

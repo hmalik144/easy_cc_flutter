@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-import 'Home.dart';
-import 'data/prefs/PreferenceProvider.dart';
+import 'data/prefs/preference_provider.dart';
+import 'home.dart';
 import 'locator.dart';
 
 var logger = Logger(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }

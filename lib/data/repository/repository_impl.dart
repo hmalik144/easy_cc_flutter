@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:easy_cc_flutter/Utils/currencyUtils.dart';
-import 'package:easy_cc_flutter/data/model/Currency.dart';
-import 'package:easy_cc_flutter/data/prefs/CurrencyPair.dart';
-import 'package:easy_cc_flutter/data/prefs/PreferenceProvider.dart';
+import 'package:easy_cc_flutter/Utils/currency_utils.dart';
+import 'package:easy_cc_flutter/data/model/currency.dart';
+import 'package:easy_cc_flutter/data/prefs/currency_pair.dart';
 
 import '../../locator.dart';
 import '../../main.dart';
-import '../network/backupCurrencyApi.dart';
-import '../network/currencyApi.dart';
-import '../network/safeApiCall.dart';
-import 'Repository.dart';
+import '../network/backup_currency_api.dart';
+import '../network/currency_api.dart';
+import '../network/safe_api_call.dart';
+import '../prefs/preference_provider.dart';
+import 'repository.dart';
 
 class RepositoryImpl extends Repository with SafeApiCall {
   final PreferenceProvider _prefs = locator<PreferenceProvider>();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../Utils/Constants.dart';
+import '../Utils/constants.dart';
 
 class ConverterEditText extends StatelessWidget {
   final String _hintText;
