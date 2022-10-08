@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('MyWidget has a title and message', (tester) async {
+  testWidgets('converter edit text controls test', (tester) async {
     // Create the widget by telling the tester to build it.
     const hintText = "Test hint text";
     const enterText = "some random text";
