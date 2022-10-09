@@ -1,4 +1,4 @@
-package com.example.easy_cc_flutter
+package com.appttude.h_mal.easycc
 
 import io.flutter.embedding.android.FlutterActivity
 
