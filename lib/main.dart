@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:logger/logger.dart';
 
 import 'data/prefs/preference_provider.dart';
@@ -14,6 +15,27 @@ void main() async {
   setupLocator();
   await locator<PreferenceProvider>().init();
   runApp(const MyApp());
+}
+
+Future<void> backgroundCallback(Uri? uri) async {
+  if (uri?.host == 'updatecounter') {
+    Map<String, String>? querys = uri?.queryParameters;
+
+    int _counter = 0;
+    await HomeWidget.getWidgetData<int>('_counter', defaultValue: 0).then((int? value) {
+      _counter = value ?? 0;
+      _counter++;
+    });
+    await HomeWidget.saveWidgetData<int>('_counter', _counter);
+    await HomeWidget.updateWidget(name: 'AppWidgetProvider', iOSName: 'AppWidgetProvider');
+  } else if (uri?.host == 'createWidget') {
+    Map<String, String>? querys = uri?.queryParameters;
+    String? id = querys?["id"];
+    String? from = querys?["from"];
+    String? to = querys?["to"];
+
+
+  }
 }
 
 class MyApp extends StatelessWidget {

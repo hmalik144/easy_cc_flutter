@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_view"
+    android:layout_width="match_parent"
+    tools:layout_width="110dp"
+    android:layout_height="72dp"
+    android:orientation="vertical"
+    android:background="#4D000000">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/exchangeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:autoSizeMaxTextSize="20sp"
+            android:autoSizeMinTextSize="6sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
+            android:textColor="#ffffff"
+            android:text="Rate not set"
+            tools:text="AUDGBP" />
+
+        <ImageView
+            android:id="@+id/refresh_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            tools:src="@drawable/ic_refresh_white_24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/exchangeName"
+            android:adjustViewBounds="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/exchangeRate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMinTextSize="6sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        tools:text="0.52646215" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/lastUpdated"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center"-->
+    <!--        android:textSize="8sp"-->
+    <!--        android:textColor="#ffffff"-->
+    <!--        android:text=" "-->
+    <!--        tools:text="Last updated: 03:18 Wed" />-->
+</LinearLayout>
