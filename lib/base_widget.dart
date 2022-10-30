@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:toast/toast.dart';
 
-import 'base_viewmodel.dart';
 import 'Utils/constants.dart';
 import 'Utils/view_state.dart';
 import 'Utils/view_utils.dart';
+import 'base_viewmodel.dart';
 
 abstract class BaseStatelessWidget<T extends BaseViewmodel>
     extends StatelessWidget {

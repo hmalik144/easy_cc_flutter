@@ -1,7 +1,14 @@
+import 'package:easy_cc_flutter/Utils/currency_utils.dart';
+import 'package:easy_cc_flutter/data/network/backup_currency_api.dart';
+import 'package:easy_cc_flutter/data/network/currency_api.dart';
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:logger/logger.dart';
 
+import 'data/model/currency.dart';
 import 'data/prefs/preference_provider.dart';
+import 'data/repository/repository.dart';
+import 'data/repository/repository_impl.dart';
 import 'home.dart';
 import 'locator.dart';
 
@@ -9,11 +16,54 @@ var logger = Logger(
   printer: PrettyPrinter(),
 );
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   await locator<PreferenceProvider>().init();
+  await HomeWidget.registerBackgroundCallback(backgroundCallback);
   runApp(const MyApp());
+}
+
+Future<void> backgroundCallback(Uri? uri) async {
+  PreferenceProvider prefs = PreferenceProvider();
+  await prefs.init();
+  CurrencyApi api = CurrencyApi.create();
+  BackupCurrencyApi backupApi = BackupCurrencyApi.create();
+  RepositoryImpl repository = RepositoryImpl(prefs, api, backupApi);
+
+  if (uri?.host == 'updatewidget') {
+    Map<String, String>? querys = uri?.queryParameters;
+    String? widgetId = querys?["id"];
+
+    await updateWidget(widgetId, repository);
+  } else if (uri?.host == 'createwidget') {
+    Map<String, String>? querys = uri?.queryParameters;
+    String? widgetId = querys?["id"];
+    String? from = querys?["from"]?.getCurrencyCode();
+    String? to = querys?["to"]?.getCurrencyCode();
+
+    await HomeWidget.saveWidgetData<String>("${widgetId}_from", from);
+    await HomeWidget.saveWidgetData<String>("${widgetId}_to", to);
+
+    await updateWidget(widgetId, repository);
+  }
+}
+
+Future<void> updateWidget(String? widgetId, Repository repository) async {
+  String? from = await HomeWidget.getWidgetData<String>("${widgetId}_from");
+  String? to = await HomeWidget.getWidgetData<String>("${widgetId}_to");
+
+  if (from == null || to == null) {
+    return;
+  }
+
+  Currency currency = await repository.getConversationRateFromApi(from, to);
+
+  await HomeWidget.saveWidgetData<String>("${widgetId}_from", from);
+  await HomeWidget.saveWidgetData<String>("${widgetId}_to", to);
+  await HomeWidget.saveWidgetData<String>("${widgetId}_rate", currency.rate.toString());
+
+  await HomeWidget.updateWidget(name: 'AppWidgetProvider', iOSName: 'AppWidgetProvider');
 }
 
 class MyApp extends StatelessWidget {

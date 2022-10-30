@@ -15,4 +15,12 @@
     <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+
+    <style name="cardview_theme" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="cardBackgroundColor">@color/colour_three</item>
+        <item name="cardCornerRadius">22dp</item>
+        <!--<item name="cardElevation">0dp</item>-->
+    </style>
 </resources>

@@ -5,8 +5,8 @@ class AppDio {
   static Dio createDio() {
     Dio dio = Dio(
         BaseOptions(
-            receiveTimeout: 60000,
-            connectTimeout: 120000,
+            receiveTimeout: 30000,
+            connectTimeout: 30000,
         )
     );
     dio.interceptors.add(LogInterceptor());
