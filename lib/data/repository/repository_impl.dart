@@ -4,7 +4,6 @@ import 'package:easy_cc_flutter/Utils/currency_utils.dart';
 import 'package:easy_cc_flutter/data/model/currency.dart';
 import 'package:easy_cc_flutter/data/prefs/currency_pair.dart';
 
-import '../../locator.dart';
 import '../../main.dart';
 import '../network/backup_currency_api.dart';
 import '../network/currency_api.dart';
@@ -13,9 +12,11 @@ import '../prefs/preference_provider.dart';
 import 'repository.dart';
 
 class RepositoryImpl extends Repository with SafeApiCall {
-  final PreferenceProvider _prefs = locator<PreferenceProvider>();
-  final CurrencyApi _api = locator<CurrencyApi>();
-  final BackupCurrencyApi _backupApi = locator<BackupCurrencyApi>();
+  final PreferenceProvider _prefs;
+  final CurrencyApi _api;
+  final BackupCurrencyApi _backupApi;
+
+  RepositoryImpl(this._prefs, this._api, this._backupApi);
 
   @override
   CurrencyPair getConversionPair() {

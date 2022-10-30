@@ -1,15 +1,14 @@
 import 'dart:io';
 
-import 'package:easy_cc_flutter/main_view_model.dart';
 import 'package:easy_cc_flutter/Utils/selection_type.dart';
+import 'package:easy_cc_flutter/Utils/view_state.dart';
 import 'package:easy_cc_flutter/data/model/currency.dart';
 import 'package:easy_cc_flutter/data/prefs/currency_pair.dart';
 import 'package:easy_cc_flutter/data/repository/repository_impl.dart';
-import 'package:easy_cc_flutter/locator.dart';
+import 'package:easy_cc_flutter/main_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:easy_cc_flutter/Utils/view_state.dart';
 
 import 'viewmodel_test.mocks.dart';
 
@@ -29,9 +28,7 @@ void main() {
     // Create mock object.
     repository = MockRepositoryImpl();
 
-    locator.registerLazySingleton(() => repository);
-
-    mainViewModel = MainViewModel();
+    mainViewModel = MainViewModel(repository);
   });
 
   test('get currency pair from prefs', () {

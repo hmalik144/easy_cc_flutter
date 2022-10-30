@@ -1,19 +1,20 @@
-import 'package:easy_cc_flutter/main_view_model.dart';
 import 'package:easy_cc_flutter/Utils/selection_type.dart';
-import 'package:easy_cc_flutter/views/drop_down_box.dart';
+import 'package:easy_cc_flutter/locator.dart';
+import 'package:easy_cc_flutter/main_view_model.dart';
 import 'package:easy_cc_flutter/views/converter_edit_text.dart';
+import 'package:easy_cc_flutter/views/drop_down_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'base_widget.dart';
 import 'Utils/constants.dart';
+import 'base_widget.dart';
 
 class HomePage extends BaseStatelessWidget<MainViewModel> {
   const HomePage({super.key});
 
   @override
   MainViewModel createViewModel() {
-    return MainViewModel();
+    return locator<MainViewModel>();
   }
 
   @override

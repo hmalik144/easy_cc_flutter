@@ -1,14 +1,14 @@
-import 'package:easy_cc_flutter/base_viewmodel.dart';
 import 'package:easy_cc_flutter/Utils/selection_type.dart';
+import 'package:easy_cc_flutter/base_viewmodel.dart';
 
 import 'Utils/constants.dart';
 import 'data/prefs/currency_pair.dart';
 import 'data/repository/repository.dart';
-import 'data/repository/repository_impl.dart';
-import 'locator.dart';
 
 class MainViewModel extends BaseViewmodel {
-  final Repository _repository = locator<RepositoryImpl>();
+  final Repository _repository;
+
+  MainViewModel(this._repository);
 
   double conversionRate = 1.0;
 

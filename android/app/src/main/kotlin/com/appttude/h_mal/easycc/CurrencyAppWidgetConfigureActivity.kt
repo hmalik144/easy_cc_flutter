@@ -1,24 +1,13 @@
 package com.appttude.h_mal.easycc
 
 import android.app.Activity
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
-import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import androidx.activity.viewModels
-import com.appttude.h_mal.easycc.databinding.CurrencyAppWidgetConfigureBinding
-import com.appttude.h_mal.easycc.ui.BaseActivity
-import com.appttude.h_mal.easycc.ui.main.CustomDialogClass
-import com.appttude.h_mal.easycc.utils.transformIntToArray
-import com.appttude.h_mal.easycc.widget.CurrencyAppWidgetKotlin
-import dagger.hilt.android.AndroidEntryPoint
+import android.widget.Toast
 import es.antonborri.home_widget.HomeWidgetBackgroundIntent
-import es.antonborri.home_widget.HomeWidgetBackgroundReceiver
-import es.antonborri.home_widget.HomeWidgetPlugin
 
 /**
  * The configuration screen for the [CurrencyAppWidgetKotlin] AppWidget.
@@ -27,6 +16,9 @@ class CurrencyAppWidgetConfigureActivity : Activity(),
     View.OnClickListener {
 
     private var mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+
+    private var top: String? = null
+    private var bottom: String? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,18 +53,23 @@ class CurrencyAppWidgetConfigureActivity : Activity(),
     override fun onClick(view: View?) {
         when (view?.tag.toString()) {
             "top", "bottom" -> showCustomDialog(view)
-            "submit" -> viewModel.submitSelectionOnClick()
-            else -> {
-                return
-            }
+            "submit" -> displaySubmitDialog()
         }
     }
 
     private fun displaySubmitDialog() {
-        val message = viewModel.getSubmitDialogMessage()
-        WidgetSubmitDialog(this, message, object : DialogSubmit {
+        if (top == null || bottom == null) {
+            Toast.makeText(this, "Selections incomplete", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (top == bottom) {
+            Toast.makeText(this, "Selected rates cannot be the same", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        WidgetSubmitDialog(this, getSubmitDialogMessage(), object : DialogSubmit {
             override fun onSubmit() {
-                sendUpdateIntent()
+                sendUpdateIntent(top!!, bottom!!)
                 finishCurrencyWidgetActivity()
             }
         }).show()
@@ -82,7 +79,10 @@ class CurrencyAppWidgetConfigureActivity : Activity(),
     private fun showCustomDialog(view: View?) {
         CustomDialogClass(this) {
             (view as TextView).text = it
-            viewModel.setCurrencyName(view.tag, it)
+            when (view.tag.toString()) {
+                "top" -> top = it
+                "bottom" -> bottom = it
+            }
         }.show()
     }
 
@@ -97,7 +97,7 @@ class CurrencyAppWidgetConfigureActivity : Activity(),
     fun sendUpdateIntent(from: String, to: String) {
         // It is the responsibility of the configuration activity to update the app widget
         // Send update broadcast to widget app class
-        val uri = Uri.parse("myAppWidget://createWidget").buildUpon()
+        val uri = Uri.parse("myAppWidget://createwidget").buildUpon()
             .appendQueryParameter("id", mAppWidgetId.toString())
             .appendQueryParameter("from", from)
             .appendQueryParameter("to", to)
@@ -106,5 +106,14 @@ class CurrencyAppWidgetConfigureActivity : Activity(),
         val backgroundIntent = HomeWidgetBackgroundIntent.getBroadcast(this, uri)
         backgroundIntent.send()
     }
+
+    private fun getSubmitDialogMessage(): String {
+        val widgetName = getWidgetStringName()
+        return StringBuilder().append("Create widget for ")
+            .append(widgetName)
+            .append("?").toString()
+    }
+
+    private fun getWidgetStringName() = "${top!!.substring(0, 3)}${bottom!!.substring(0, 3)}"
 
 }

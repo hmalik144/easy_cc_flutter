@@ -8,7 +8,6 @@ import 'package:easy_cc_flutter/data/network/currency_api.dart';
 import 'package:easy_cc_flutter/data/prefs/currency_pair.dart';
 import 'package:easy_cc_flutter/data/prefs/preference_provider.dart';
 import 'package:easy_cc_flutter/data/repository/repository_impl.dart';
-import 'package:easy_cc_flutter/locator.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -29,7 +28,8 @@ import 'repository_test.mocks.dart';
   MockSpec<DioError>(onMissingStub: OnMissingStub.returnDefault)
 ])
 void main() {
-  late RepositoryImpl repository;
+  late RepositoryImpl sut;
+
   late PreferenceProvider preferenceProvider;
   late CurrencyApi currencyApi;
   late BackupCurrencyApi backupCurrencyApi;
@@ -44,11 +44,7 @@ void main() {
     currencyApi = MockCurrencyApi();
     backupCurrencyApi = MockBackupCurrencyApi();
 
-    locator.registerLazySingleton(() => preferenceProvider);
-    locator.registerLazySingleton(() => currencyApi);
-    locator.registerLazySingleton(() => backupCurrencyApi);
-
-    repository = RepositoryImpl();
+    sut = RepositoryImpl(preferenceProvider, currencyApi, backupCurrencyApi);
   });
 
   test('get currency pair from prefs', () {
@@ -59,7 +55,7 @@ void main() {
     when(preferenceProvider.getConversionPair()).thenReturn(pair);
 
     // Then
-    expect(repository.getConversionPair(), pair);
+    expect(sut.getConversionPair(), pair);
   });
 
   test('get currency rate from API', () async {
@@ -77,7 +73,7 @@ void main() {
 
     // Then
     Currency retrieved =
-        await repository.getConversationRateFromApi(fromCurrency, toCurrency);
+        await sut.getConversationRateFromApi(fromCurrency, toCurrency);
     expect(retrieved.toString(), currencyObject.toString());
   });
 
@@ -98,7 +94,7 @@ void main() {
 
     // Then
     Currency retrieved =
-        await repository.getConversationRateFromApi(fromCurrency, toCurrency);
+        await sut.getConversationRateFromApi(fromCurrency, toCurrency);
     expect(retrieved.toString(), currencyObject.toString());
   });
 
@@ -115,7 +111,7 @@ void main() {
         .thenAnswer((_) async => Future.error(backUpError));
 
     // Then
-    expect(() async => await repository.getConversationRateFromApi(fromCurrency, toCurrency),
+    expect(() async => await sut.getConversationRateFromApi(fromCurrency, toCurrency),
         throwsA(predicate((e) =>
             e is HttpException &&
             e.message == 'Error message')));
