@@ -64,11 +64,10 @@ void main() {
     ResponseObject responseObject = ResponseObject.fromJson(
         await readJson("test/resources/success_call_api"));
     Currency currencyObject = Currency("AUD", "GBP", 0.601188);
-    String currency = "AUD_GBP";
 
     // When
     when(mockResponse.data).thenReturn(responseObject);
-    when(currencyApi.getConversion(currency))
+    when(currencyApi.getConversion("AUD", "GBP"))
         .thenAnswer((_) async => mockResponse);
 
     // Then
@@ -83,10 +82,9 @@ void main() {
     CurrencyResponse currencyResponse = CurrencyResponse.fromJson(
         await readJson("test/resources/success_call_backup_api"));
     Currency currencyObject = Currency("AUD", "GBP", 0.601188);
-    String currency = "AUD_GBP";
 
     // When
-    when(currencyApi.getConversion(currency))
+    when(currencyApi.getConversion("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(MockDioError()));
     when(mockResponse.data).thenReturn(currencyResponse);
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
@@ -100,12 +98,11 @@ void main() {
 
   test('unable to retrieve rate from both APIs', () async {
     // Given
-    String currency = "AUD_GBP";
     DioError backUpError = MockDioError();
 
     // When
     when(backUpError.error).thenReturn("Error message");
-    when(currencyApi.getConversion(currency))
+    when(currencyApi.getConversion("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(MockDioError()));
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(backUpError));
