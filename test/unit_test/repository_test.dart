@@ -108,9 +108,9 @@ void main() {
         .thenAnswer((_) async => Future.error(backUpError));
 
     // Then
-    expect(() async => await sut.getConversationRateFromApi(fromCurrency, toCurrency),
-        throwsA(predicate((e) =>
-            e is HttpException &&
-            e.message == 'Error message')));
+    expect(() async =>
+            await sut.getConversationRateFromApi(fromCurrency, toCurrency),
+        throwsA(predicate(
+            (e) => e is HttpException && e.message == 'Error message')));
   });
 }

@@ -1,13 +1,7 @@
 {
-  "query": {
-    "count": 1
-  },
-  "results": {
-    "AUD_GBP": {
-      "id": "AUD_GBP",
-      "fr": "AUD",
-      "to": "GBP",
-      "val": 0.601188
-    }
+  "base": "AUD",
+  "last_updated": 1675689300,
+  "exchange_rates": {
+    "GBP": 0.601188
   }
 }

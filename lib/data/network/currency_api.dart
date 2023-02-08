@@ -30,7 +30,7 @@ abstract class CurrencyApi {
 @JsonSerializable()
 class ResponseObject implements CurrencyMapper {
   String base;
-  String last_updated;
+  int last_updated;
   Map<String, double>? exchange_rates;
 
   ResponseObject(this.base, this.last_updated, this.exchange_rates);
