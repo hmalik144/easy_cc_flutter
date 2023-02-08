@@ -1,4 +1,6 @@
 // ignore: depend_on_referenced_packages
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:dio/dio.dart';
 import 'package:easy_cc_flutter/data/network/app_dio.dart';
 import 'package:json_annotation/json_annotation.dart';
