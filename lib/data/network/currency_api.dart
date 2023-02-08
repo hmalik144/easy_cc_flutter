@@ -1,5 +1,4 @@
-// ignore: depend_on_referenced_packages
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages
 
 import 'package:dio/dio.dart';
 import 'package:easy_cc_flutter/data/network/app_dio.dart';
