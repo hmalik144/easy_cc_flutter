@@ -15,14 +15,14 @@ mixin SafeApiCall {
       Map<String, dynamic>? errorResponse = dioError.response?.data?["error"];
       String error;
 
-      if (errorResponse?["error"] != null){
-        error = errorResponse!["error"];
-      } else if (dioError.error != null){
-        error = dioError.error;
+      if (errorResponse?["message"] != null){
+        error = errorResponse!["message"];
+      } else if (dioError.message.isNotEmpty){
+        error = dioError.message;
       } else {
         error = "Failed to retrieve data from api";
       }
-      logger.e(dioError.error);
+      logger.e(error);
 
       throw HttpException(error);
     }

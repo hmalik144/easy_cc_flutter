@@ -33,10 +33,8 @@ class RepositoryImpl extends Repository with SafeApiCall {
     String from = fromCurrency.getCurrencyCode();
     String to = toCurrency.getCurrencyCode();
 
-    String currency = "${from}_$to";
-
     try {
-      ResponseObject responseObject = await getDataFromApiCall(_api.getConversion(currency));
+      ResponseObject responseObject = await getDataFromApiCall(_api.getConversion(from, to));
       return responseObject.convert();
     } on HttpException catch(error) {
       logger.e(error);

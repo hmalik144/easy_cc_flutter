@@ -3,6 +3,7 @@ import 'package:easy_cc_flutter/data/network/currency_api.dart';
 import 'package:easy_cc_flutter/data/repository/repository_impl.dart';
 import 'package:easy_cc_flutter/main_view_model.dart';
 import 'package:get_it/get_it.dart';
+
 import 'data/prefs/preference_provider.dart';
 import 'data/repository/repository.dart';
 

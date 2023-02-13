@@ -25,6 +25,7 @@ import 'repository_test.mocks.dart';
       onMissingStub: OnMissingStub.returnDefault),
   MockSpec<http.HttpResponse<CurrencyResponse>>(
       as: #MockCurrencyResponse, onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<HttpException>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DioError>(onMissingStub: OnMissingStub.returnDefault)
 ])
 void main() {
@@ -64,11 +65,10 @@ void main() {
     ResponseObject responseObject = ResponseObject.fromJson(
         await readJson("test/resources/success_call_api"));
     Currency currencyObject = Currency("AUD", "GBP", 0.601188);
-    String currency = "AUD_GBP";
 
     // When
     when(mockResponse.data).thenReturn(responseObject);
-    when(currencyApi.getConversion(currency))
+    when(currencyApi.getConversion("AUD", "GBP"))
         .thenAnswer((_) async => mockResponse);
 
     // Then
@@ -83,11 +83,10 @@ void main() {
     CurrencyResponse currencyResponse = CurrencyResponse.fromJson(
         await readJson("test/resources/success_call_backup_api"));
     Currency currencyObject = Currency("AUD", "GBP", 0.601188);
-    String currency = "AUD_GBP";
 
     // When
-    when(currencyApi.getConversion(currency))
-        .thenAnswer((_) async => Future.error(MockDioError()));
+    when(currencyApi.getConversion("AUD", "GBP"))
+        .thenAnswer((_) async => Future.error(MockHttpException()));
     when(mockResponse.data).thenReturn(currencyResponse);
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
         .thenAnswer((_) async => mockResponse);
@@ -100,20 +99,20 @@ void main() {
 
   test('unable to retrieve rate from both APIs', () async {
     // Given
-    String currency = "AUD_GBP";
-    DioError backUpError = MockDioError();
+    MockDioError backUpError = MockDioError();
 
     // When
-    when(backUpError.error).thenReturn("Error message");
-    when(currencyApi.getConversion(currency))
+    when(backUpError.message).thenReturn("Error message");
+    when(currencyApi.getConversion("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(MockDioError()));
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(backUpError));
 
     // Then
-    expect(() async => await sut.getConversationRateFromApi(fromCurrency, toCurrency),
-        throwsA(predicate((e) =>
-            e is HttpException &&
-            e.message == 'Error message')));
+    expect(
+        () async =>
+            await sut.getConversationRateFromApi(fromCurrency, toCurrency),
+        throwsA(predicate(
+            (e) => e is HttpException && e.message == 'Error message')));
   });
 }

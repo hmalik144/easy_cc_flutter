@@ -62,6 +62,7 @@ Future<void> updateWidget(String? widgetId, Repository repository) async {
   await HomeWidget.saveWidgetData<String>("${widgetId}_from", from);
   await HomeWidget.saveWidgetData<String>("${widgetId}_to", to);
   await HomeWidget.saveWidgetData<String>("${widgetId}_rate", currency.rate.toString());
+  await HomeWidget.saveWidgetData<bool>("${widgetId}_forced_update", true);
 
   await HomeWidget.updateWidget(name: 'AppWidgetProvider', iOSName: 'AppWidgetProvider');
 }
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
