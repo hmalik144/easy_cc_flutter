@@ -21,6 +21,11 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def relStorePassword = System.getenv("storePassword")
+def relKeyPassword = System.getenv("keyPassword")
+def relKeyAlias = System.getenv("keyAlias")
+def relStoreFile = System.getenv("storeFile")
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -43,7 +48,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.appttude.h_mal.easycc"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
@@ -53,11 +57,22 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        release {
+            storePassword relStorePassword
+            keyPassword relKeyPassword
+            keyAlias relKeyAlias
+            storeFile file(relStoreFile)
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }

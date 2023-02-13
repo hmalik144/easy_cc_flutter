@@ -17,8 +17,8 @@ mixin SafeApiCall {
 
       if (errorResponse?["message"] != null){
         error = errorResponse!["message"];
-      } else if (dioError.error != null){
-        error = dioError.error;
+      } else if (dioError.message.isNotEmpty){
+        error = dioError.message;
       } else {
         error = "Failed to retrieve data from api";
       }

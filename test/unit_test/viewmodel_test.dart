@@ -55,8 +55,8 @@ void main() {
     // Then
     String fromSelection = mainViewModel.getConversionPair(SelectionType.conversionFrom);
     String toSelection = mainViewModel.getConversionPair(SelectionType.conversionTo);
-    expect(fromSelection, "ALL - Albanian Lek");
-    expect(toSelection, "ALL - Albanian Lek");
+    expect(fromSelection, "DZD - Algerian Dinar");
+    expect(toSelection, "DZD - Algerian Dinar");
   });
 
   test('set the currency rate from API', () async{

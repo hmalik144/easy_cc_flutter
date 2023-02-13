@@ -40,8 +40,8 @@ class MainViewModel extends BaseViewmodel {
         (value) {
           conversionRate = value.rate != null ? value.rate! : 0.00;
           onSuccess(value);
-    }, onError: (exception, _) {
-          onError(exception.message);
+    }).catchError((e) {
+      onError(e.message);
     });
   }
 

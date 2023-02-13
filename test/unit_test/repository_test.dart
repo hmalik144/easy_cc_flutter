@@ -25,6 +25,7 @@ import 'repository_test.mocks.dart';
       onMissingStub: OnMissingStub.returnDefault),
   MockSpec<http.HttpResponse<CurrencyResponse>>(
       as: #MockCurrencyResponse, onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<HttpException>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DioError>(onMissingStub: OnMissingStub.returnDefault)
 ])
 void main() {
@@ -85,7 +86,7 @@ void main() {
 
     // When
     when(currencyApi.getConversion("AUD", "GBP"))
-        .thenAnswer((_) async => Future.error(MockDioError()));
+        .thenAnswer((_) async => Future.error(MockHttpException()));
     when(mockResponse.data).thenReturn(currencyResponse);
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
         .thenAnswer((_) async => mockResponse);
@@ -98,17 +99,18 @@ void main() {
 
   test('unable to retrieve rate from both APIs', () async {
     // Given
-    DioError backUpError = MockDioError();
+    MockDioError backUpError = MockDioError();
 
     // When
-    when(backUpError.error).thenReturn("Error message");
+    when(backUpError.message).thenReturn("Error message");
     when(currencyApi.getConversion("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(MockDioError()));
     when(backupCurrencyApi.getCurrencyRate("AUD", "GBP"))
         .thenAnswer((_) async => Future.error(backUpError));
 
     // Then
-    expect(() async =>
+    expect(
+        () async =>
             await sut.getConversationRateFromApi(fromCurrency, toCurrency),
         throwsA(predicate(
             (e) => e is HttpException && e.message == 'Error message')));
