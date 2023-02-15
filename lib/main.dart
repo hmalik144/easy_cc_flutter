@@ -1,9 +1,11 @@
 import 'package:easy_cc_flutter/Utils/currency_utils.dart';
 import 'package:easy_cc_flutter/data/network/backup_currency_api.dart';
 import 'package:easy_cc_flutter/data/network/currency_api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:logger/logger.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'data/model/currency.dart';
 import 'data/prefs/preference_provider.dart';
@@ -24,7 +26,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-Future<void> backgroundCallback(Uri? uri) async {
+@pragma("vm:entry-point")
+Future<bool?> backgroundCallback(Uri? uri) async {
   PreferenceProvider prefs = PreferenceProvider();
   await prefs.init();
   CurrencyApi api = CurrencyApi.create();
@@ -35,7 +38,7 @@ Future<void> backgroundCallback(Uri? uri) async {
     Map<String, String>? querys = uri?.queryParameters;
     String? widgetId = querys?["id"];
 
-    await updateWidget(widgetId, repository);
+    return await updateWidget(widgetId, repository);
   } else if (uri?.host == 'createwidget') {
     Map<String, String>? querys = uri?.queryParameters;
     String? widgetId = querys?["id"];
@@ -45,26 +48,29 @@ Future<void> backgroundCallback(Uri? uri) async {
     await HomeWidget.saveWidgetData<String>("${widgetId}_from", from);
     await HomeWidget.saveWidgetData<String>("${widgetId}_to", to);
 
-    await updateWidget(widgetId, repository);
+    return await updateWidget(widgetId, repository);
   }
+  return null;
 }
 
-Future<void> updateWidget(String? widgetId, Repository repository) async {
+Future<bool?> updateWidget(String? widgetId, Repository repository) async {
   String? from = await HomeWidget.getWidgetData<String>("${widgetId}_from");
   String? to = await HomeWidget.getWidgetData<String>("${widgetId}_to");
 
   if (from == null || to == null) {
-    return;
+    return false;
   }
 
   Currency currency = await repository.getConversationRateFromApi(from, to);
 
   await HomeWidget.saveWidgetData<String>("${widgetId}_from", from);
   await HomeWidget.saveWidgetData<String>("${widgetId}_to", to);
-  await HomeWidget.saveWidgetData<String>("${widgetId}_rate", currency.rate.toString());
+  await HomeWidget.saveWidgetData<String>(
+      "${widgetId}_rate", currency.rate.toString());
   await HomeWidget.saveWidgetData<bool>("${widgetId}_forced_update", true);
 
-  await HomeWidget.updateWidget(name: 'AppWidgetProvider', iOSName: 'AppWidgetProvider');
+  return await HomeWidget.updateWidget(
+      name: 'AppWidgetProvider', iOSName: 'AppWidgetProvider');
 }
 
 class MyApp extends StatelessWidget {
