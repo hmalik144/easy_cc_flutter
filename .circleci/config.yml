@@ -12,19 +12,31 @@ jobs:
       - run: flutter test
   build_release:
     docker:
-      - image: cirrusci/flutter:3.3.3
+      - image: circleci/android:api-28-node
     steps:
       - run:
-          name: prepare keystore for release
+          name: Decode keystore
+          working_directory: android
           command: echo $KEYSTORE_RELEASE_BASE64 | base64 -d | tee app/your-project.keystore > /dev/null
       - run:
           name: Create keystore.properties
           working_directory: android
           command: echo -e "releaseKeyAlias=$RELEASE_KEY_ALIAS\nreleaseKeyPassword=$RELEASE_KEY_PASSWORD\nreleaseKeyStore=$RELEASE_KEYSTORE\nreleaseStorePassword=$RELEASE_STORE_PASSWORD" > your-keystore.properties
       - run:
+          name: Build release
+          working_directory: android
+          command: ./gradlew assembleRelease -x bundleReleaseJsAndAssets
+      - store_artifacts:
+          path: android/app/build/outputs/apk/release/
+          destination: artifact-file
+      - run:
           name: Create Google Play key
           working_directory: android
           command: echo $GOOGLE_PLAY_KEY > your-google-play-key.json
+      - run:
+          name: Install Gem dependencies for android Fastfile
+          command: bundle install
+          working_directory: android
       - run:
           name: Upload to Google App Store
           command: cd android && bundle exec fastlane playstore --verbose
@@ -33,10 +45,10 @@ workflows:
   build_non_prod:
     jobs:
       - build_all
-          filters:
-            branches:
-              ignore:
-                - master
+        filters:
+          branches:
+            ignore:
+              - master
   build_release:
     jobs:
       - build_all
