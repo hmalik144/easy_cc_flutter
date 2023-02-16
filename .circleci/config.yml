@@ -16,8 +16,7 @@ jobs:
     steps:
       - run:
           name: Decode keystore
-          command:
-            - echo $RELEASE_KEYSTORE_BASE64 | base64 -d | tee release-keystore.keystore > /dev/null
+          command: echo $RELEASE_KEYSTORE_BASE64 | base64 -d | tee release-keystore.keystore > /dev/null
       - run:
           name: Build Android release
           command: flutter build apk
@@ -27,9 +26,7 @@ jobs:
       - run:
           name: Create Google Play key
           working_directory: ~/android
-          command:
-            - cd android/
-            - echo $GOOGLE_PLAY_KEY > your-google-play-key.json
+          command: cd android && echo $GOOGLE_PLAY_KEY > your-google-play-key.json
       - run:
           name: Install Gem dependencies for android Fastfile
           command: bundle install
