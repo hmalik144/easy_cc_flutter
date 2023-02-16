@@ -19,7 +19,7 @@ jobs:
           command: echo $RELEASE_KEYSTORE_BASE64 | base64 -d | tee release-keystore.keystore > /dev/null
       - run:
           name: Build Android release
-          command: flutter build apk
+          command: ls && flutter build apk
       - store_artifacts:
           path: android/app/build/outputs/apk/release/
           destination: artifact-file
