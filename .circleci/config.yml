@@ -16,27 +16,27 @@ jobs:
     steps:
       - run:
           name: Decode keystore
-          working_directory: android
+          working_directory: ~/android
           command: echo $RELEASE_KEYSTORE_BASE64 | base64 -d | tee app/your-project.keystore > /dev/null
       - run:
           name: Create keystore.properties
-          working_directory: android
+          working_directory: ~/android
           command: echo -e "releaseKeyAlias=$RELEASE_KEY_ALIAS\nreleaseKeyPassword=$RELEASE_KEY_PASSWORD\nreleaseKeyStore=$RELEASE_KEYSTORE\nreleaseStorePassword=$RELEASE_STORE_PASSWORD" > your-keystore.properties
       - run:
           name: Build release
-          working_directory: android
+          working_directory: ~/android
           command: ./gradlew assembleRelease -x bundleReleaseJsAndAssets
       - store_artifacts:
           path: android/app/build/outputs/apk/release/
           destination: artifact-file
       - run:
           name: Create Google Play key
-          working_directory: android
+          working_directory: ~/android
           command: echo $GOOGLE_PLAY_KEY > your-google-play-key.json
       - run:
           name: Install Gem dependencies for android Fastfile
           command: bundle install
-          working_directory: android
+          working_directory: ~/android
       - run:
           name: Upload to Google App Store
           command: cd android && bundle exec fastlane playstore --verbose
