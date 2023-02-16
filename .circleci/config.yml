@@ -42,14 +42,7 @@ jobs:
           command: cd android && bundle exec fastlane playstore --verbose
 workflows:
   version: 2
-  build_non_prod:
-    jobs:
-      - build_all
-        filters:
-          branches:
-            ignore:
-              - master
-  build_release:
+  build:
     jobs:
       - build_all
       - build_release:
@@ -59,3 +52,4 @@ workflows:
             branches:
               only:
                 - master
+                - CD_integration
