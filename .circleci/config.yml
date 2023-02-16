@@ -12,7 +12,7 @@ jobs:
       - run: flutter test
   build_release:
     docker:
-      - image: circleci/android:api-28-node
+      - image: cirrusci/flutter:3.3.3
     steps:
       - run:
           name: Decode keystore
