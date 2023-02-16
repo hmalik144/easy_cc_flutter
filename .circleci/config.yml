@@ -47,3 +47,4 @@ workflows:
             branches:
               only:
                 - master
+                - CD_integration
