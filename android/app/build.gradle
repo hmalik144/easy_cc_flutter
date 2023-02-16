@@ -21,10 +21,10 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def relStorePassword = System.getenv("storePassword")
-def relKeyPassword = System.getenv("keyPassword")
-def relKeyAlias = System.getenv("keyAlias")
-def relStoreFile = System.getenv("storeFile")
+def relStorePassword = System.getenv("RELEASE_STORE_PASSWORD")
+def relKeyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+def relKeyAlias = System.getenv("RELEASE_KEY_ALIAS")
+def relStoreFile = System.getenv("RELEASE_KEYSTORE")
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'

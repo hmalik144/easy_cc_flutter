@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build:
+  build_all:
     docker:
       - image: cirrusci/flutter:3.3.3
     steps:
@@ -10,3 +10,40 @@ jobs:
       - run: flutter pub run build_runner build
       - run: flutter analyze lib
       - run: flutter test
+  build_release:
+    docker:
+      - image: cirrusci/flutter:3.3.3
+    steps:
+      - run:
+          name: prepare keystore for release
+          command: echo $KEYSTORE_RELEASE_BASE64 | base64 -d | tee app/your-project.keystore > /dev/null
+      - run:
+          name: Create keystore.properties
+          working_directory: android
+          command: echo -e "releaseKeyAlias=$RELEASE_KEY_ALIAS\nreleaseKeyPassword=$RELEASE_KEY_PASSWORD\nreleaseKeyStore=$RELEASE_KEYSTORE\nreleaseStorePassword=$RELEASE_STORE_PASSWORD" > your-keystore.properties
+      - run:
+          name: Create Google Play key
+          working_directory: android
+          command: echo $GOOGLE_PLAY_KEY > your-google-play-key.json
+      - run:
+          name: Upload to Google App Store
+          command: cd android && bundle exec fastlane playstore --verbose
+workflows:
+  version: 2
+  build_non_prod:
+    jobs:
+      - build_all
+          filters:
+            branches:
+              ignore:
+                - master
+  build_release:
+    jobs:
+      - build_all
+      - build_release:
+          requires:
+            - build_all
+          filters:
+            branches:
+              only:
+                - master
