@@ -102,7 +102,7 @@ workflows:
               ignore: master
   distribute-android:
     jobs:
-      - distribute-android-dev:
+      - distribute-android:
           filters:
             branches:
               only: master
