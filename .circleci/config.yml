@@ -7,7 +7,7 @@ orbs:
 parameters:
   flutter_version:
     type: string
-    default: "2.10.4"
+    default: "3.3.3"
   xcode_version:
     type: string
     default: "13.3.0"
