@@ -132,11 +132,11 @@ jobs:
       - store_artifacts:
           path: build/app/outputs/flutter-apk/app-development-release.apk
       - run:
-        name: Upload to PlayStore
-        command: |
-          pwd
-          cd android
-          bundle exec fastlane supply --apk ../build/app/outputs/flutter-apk/app-development-release.apk --rollout 1
+          name: Upload to PlayStore
+          command: |
+            pwd
+            cd android
+            bundle exec fastlane supply --apk ../build/app/outputs/flutter-apk/app-development-release.apk --rollout 1
 
 #  distribute-android-prod:
 #    docker:
