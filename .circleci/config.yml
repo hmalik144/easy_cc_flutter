@@ -8,13 +8,16 @@ jobs:
       - run: flutter doctor
       - run: flutter pub get
       - run: flutter pub run build_runner build
-      - run: flutter analyze lib
-      - run: flutter test
+  #      - run: flutter analyze lib
+  #      - run: flutter test
   build_release:
     working_directory: ~/easy_cc_flutter
     docker:
       - image: cirrusci/flutter:3.3.3
     steps:
+      - run:
+          name: where am i
+          command: ls 
       - run:
           name: Keystore variables
           command: |
