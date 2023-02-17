@@ -33,7 +33,7 @@ commands:
           name: Keystore variables
           command: |
             echo "$GOOGLE_PLAY_KEY" > "android/playstore.json"
-            echo "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "android/app/release_keystore.jks
+            echo "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "android/app/release_keystore.jks"
   #            echo "$ANDROID_KEY_PROPERTIES" | base64 --decode > "android/key.properties"
   #            echo "$ENV_PROD" | base64 --decode > ".env"
   #            echo "$ENV_DEV" | base64 --decode > ".dev.env"
