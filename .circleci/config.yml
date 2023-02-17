@@ -29,6 +29,11 @@ commands:
   android_setup:
     steps:
       - checkout
+      - run: flutter doctor
+      - run: flutter pub get
+      - run: flutter pub run build_runner build
+#      - run: flutter analyze lib
+#      - run: flutter test
       - run:
           name: Keystore variables
           command: |
