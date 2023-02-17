@@ -135,13 +135,13 @@ jobs:
           name: Build Android APK
           command: flutter build apk # --release --target lib/main_development.dart --flavor=development
       - store_artifacts:
-          path: build/app/outputs/flutter-apk/app-development-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
       - run:
           name: Upload to PlayStore
           command: |
             pwd
             cd android
-            bundle exec fastlane supply --apk ../build/app/outputs/flutter-apk/app-development-release.apk --rollout 1
+            bundle exec fastlane supply --apk ../build/app/outputs/flutter-apk/app-release.apk --rollout 1
 
 #  distribute-android-prod:
 #    docker:
