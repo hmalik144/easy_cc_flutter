@@ -17,11 +17,11 @@ jobs:
       - run:
           name: Keystore variables
           command: |
-            echo "$GOOGLE_PLAY_KEY" > "android/playstore.json"
-            echo "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "android/app/release_keystore.jks"
+            ls && echo "$GOOGLE_PLAY_KEY" > "android/playstore.json"
+            ls && echo "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "android/app/release_keystore.jks"
       - run:
           name: Build Android release
-          command: cd ~/ && flutter build apk
+          command: ls && cd ~/ && ls && flutter build apk
       - store_artifacts:
           path: android/app/build/outputs/apk/release/app-release.apk
           destination: artifact-file
