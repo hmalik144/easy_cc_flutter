@@ -288,7 +288,7 @@ packages:
       name: home_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.6"
+    version: "0.2.0+1"
   http_multi_server:
     dependency: transitive
     description:
@@ -756,6 +756,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  workmanager:
+    dependency: "direct main"
+    description:
+      name: workmanager
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -778,5 +785,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.18.0-190.0.dev <3.0.0"
+  dart: ">=2.18.0 <3.0.0"
   flutter: ">=3.0.0"
