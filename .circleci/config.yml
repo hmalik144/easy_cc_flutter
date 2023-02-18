@@ -108,7 +108,7 @@ workflows:
               only: master
   distribute-ios:
     jobs:
-      - distribute-ios-prod:
+      - distribute-ios:
           filters:
             branches:
               only: ios_deployment
