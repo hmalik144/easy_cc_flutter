@@ -35,6 +35,7 @@ class MainViewModel extends BaseViewmodel {
   }
 
   void setCurrencyRate(String fromCurrency, String toCurrency) {
+    if (fromCurrency == toCurrency) return;
     onStart();
     _repository.getConversationRateFromApi(fromCurrency, toCurrency).then(
         (value) {

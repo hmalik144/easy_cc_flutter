@@ -127,7 +127,7 @@ jobs:
       - fastlane_setup_android
       - run:
           name: Build Android APK
-          command: flutter build apk
+          command: flutter build apk --dart-define=currencyApiKey=%CURRENCY_API_KEY%
       - store_artifacts:
           path: build/app/outputs/flutter-apk/app-release.apk
       - run:
