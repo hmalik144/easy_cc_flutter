@@ -1,11 +1,9 @@
 import 'package:easy_cc_flutter/Utils/currency_utils.dart';
 import 'package:easy_cc_flutter/data/network/backup_currency_api.dart';
 import 'package:easy_cc_flutter/data/network/currency_api.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:logger/logger.dart';
-import 'package:workmanager/workmanager.dart';
 
 import 'data/model/currency.dart';
 import 'data/prefs/preference_provider.dart';
